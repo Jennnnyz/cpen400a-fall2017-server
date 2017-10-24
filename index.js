@@ -89,7 +89,12 @@ app.get('/products/:productKey', function(request, response) {
   response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   var option = getRandomInt(0,5);
   if (option < 4) {
-    response.json(products[request.params.productKey]);
+	  if (request.params.productKey in products){
+		  response.json(products[request.params.productKey]);	  
+	  }
+	  else {
+		  response.status(404).send("Product does not exist");
+	  }
   } else if (option == 4) {
     response.status(500).send("An error occurred, please try again");
   }
