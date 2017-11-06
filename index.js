@@ -10,7 +10,11 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var products = {
+var products = {};
+
+function getProducts(){
+
+products = {
   'KeyboardCombo' : {
 	name: 'KeyboardCombo',
     price : getRandomInt(25,35),
@@ -84,6 +88,7 @@ var products = {
     imageUrl: appHost+'images/Keyboard.png'
   }
 };
+}
 
 app.get('/products', function(request, response) {
 
@@ -91,6 +96,7 @@ app.get('/products', function(request, response) {
   response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   var option = getRandomInt(0,5);
   if (option < 4) {
+    getProducts();
     response.json(products);
   } else if (option == 4) {
     response.status(500).send("An error occurred, please try again");
